@@ -20,8 +20,7 @@ namespace Aplicacion.Seguridad
     {
         public class Ejecuta : IRequest<UsuarioData>
         {
-            public string Nombre { get; set; }
-            public string Apellido { get; set; }
+            public string NombreCompleto { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
             public string Username { get; set; }
@@ -32,8 +31,7 @@ namespace Aplicacion.Seguridad
         {
             public ValidarEjecuta()
             {
-                RuleFor(x => x.Nombre).NotEmpty();
-                RuleFor(x => x.Apellido).NotEmpty();
+                RuleFor(x => x.NombreCompleto).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty();
                 RuleFor(x => x.Password).NotEmpty();
                 RuleFor(x => x.Username).NotEmpty();
@@ -69,7 +67,7 @@ namespace Aplicacion.Seguridad
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El email pertenece a otro usuario" });
                 }
 
-                usuario.NombreCompleto = request.Nombre + ' ' + request.Apellido;
+                usuario.NombreCompleto = request.NombreCompleto;
                 usuario.PasswordHash = passwordHasher.HashPassword(usuario, request.Password);
                 usuario.Email = request.Email;
 
