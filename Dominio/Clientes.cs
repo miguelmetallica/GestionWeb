@@ -11,6 +11,7 @@ namespace Dominio
         public string RazonSocial { get; set; }
         public string TipoDocumentoId { get; set; }
         public string NroDocumento { get; set; }
+        public string CuilCuit { get; set; }
         public string Foto { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public string EstadoCivilId { get; set; }
@@ -29,7 +30,6 @@ namespace Dominio
         public bool Estado { get; set; }
         public string UsuarioAlta { get; set; }
         public DateTime FechaAlta { get; set; }
-
         
         public TiposDocumentos TipoDocumento { get; set; }       
         public EstadosCiviles EstadoCivil { get; set; }        

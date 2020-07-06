@@ -3,8 +3,11 @@ import { Container, Typography, Grid, TextField, Button } from '@material-ui/cor
 import style from '../Tool/Style';
 import { useEffect } from 'react';
 import { obtenerUsuarioActual, actualizaUsuario } from '../actions/UsuarioAction';
+import { useStateValue } from '../../contexto/store';
 
 const PerfilUsuario = () => {
+
+    const [{ sesionUsuario }, dispatch] = useStateValue();
 
     const [usuario, setUsuario] = useState({
         nombreCompleto: '',
@@ -23,7 +26,7 @@ const PerfilUsuario = () => {
     }
 
     useEffect(() => {
-        obtenerUsuarioActual().then(response => {
+        obtenerUsuarioActual(dispatch).then(response => {
             console.log('usuario actual', response);
             setUsuario(response.data);
         });
@@ -33,7 +36,7 @@ const PerfilUsuario = () => {
         e.preventDefault();
         actualizaUsuario(usuario).then(response => {
             console.log('se registro existosamente', response);
-            window.localStorage.setItem("token_seguridad", response.data.token);
+            //window.localStorage.setItem("token_seguridad", response.data.token);
         })
     }
 

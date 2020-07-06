@@ -46,7 +46,7 @@ namespace WebApi
                 builder.AllowAnyMethod();
                 builder.AllowAnyHeader();
             }));
-
+            
             services.AddDbContext<GestionContext>(opt =>
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
@@ -71,6 +71,7 @@ namespace WebApi
             
             identityBuilder.AddEntityFrameworkStores<GestionContext>();
             identityBuilder.AddSignInManager<SignInManager<Usuarios>>();
+            
             services.TryAddSingleton<ISystemClock, SystemClock>();
 
             services.AddAuthentication(options => { options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme; })
