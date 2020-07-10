@@ -26,7 +26,7 @@ namespace Aplicacion.TiposDocumentos
             }
             public async Task<TiposDocumentos> Handle(Unico request, CancellationToken cancellationToken)
             {
-                var tiposDocumentos = await context.ParamTiposDocumentos.FindAsync(request.Id);
+                var tiposDocumentos = await context.paramTiposDocumentos.FindAsync(request.Id);
                 if (tiposDocumentos == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });

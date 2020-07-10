@@ -42,7 +42,7 @@ namespace Aplicacion.EstadosCiviles
                                             Estado = true
                                             };
 
-                context.ParamEstadosCiviles.Add(estadosCiviles);
+                context.paramEstadosCiviles.Add(estadosCiviles);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

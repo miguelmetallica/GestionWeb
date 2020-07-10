@@ -40,7 +40,7 @@ namespace Aplicacion.TiposDocumentos
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var tiposDocumentos = await context.ParamTiposDocumentos.FindAsync(request.Id);
+                var tiposDocumentos = await context.paramTiposDocumentos.FindAsync(request.Id);
                 if (tiposDocumentos == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });
@@ -50,7 +50,7 @@ namespace Aplicacion.TiposDocumentos
                 tiposDocumentos.Descripcion = request.Descripcion ?? tiposDocumentos.Descripcion;
                 tiposDocumentos.Estado = request.Estado;
                 
-                context.ParamTiposDocumentos.Update(tiposDocumentos);
+                context.paramTiposDocumentos.Update(tiposDocumentos);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

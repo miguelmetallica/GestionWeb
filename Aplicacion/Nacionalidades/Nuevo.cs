@@ -42,7 +42,7 @@ namespace Aplicacion.Nacionalidades
                                             Estado = true
                                             };
 
-                context.ParamNacionalidades.Add(nacionalidades);
+                context.paramNacionalidades.Add(nacionalidades);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

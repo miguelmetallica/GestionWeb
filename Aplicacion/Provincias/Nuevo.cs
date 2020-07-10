@@ -42,7 +42,7 @@ namespace Aplicacion.Provincias
                                             Estado = true
                                             };
 
-                context.ParamProvincias.Add(provincias);
+                context.paramProvincias.Add(provincias);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

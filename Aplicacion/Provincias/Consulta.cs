@@ -25,7 +25,7 @@ namespace Aplicacion.Provincias
             }
             public Task<List<Provincias>> Handle(Listado request, CancellationToken cancellationToken)
             {
-                var provincias = context.ParamProvincias.ToListAsync();
+                var provincias = context.paramProvincias.ToListAsync();
                 return provincias;
             }
         }

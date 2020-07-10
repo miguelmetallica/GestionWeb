@@ -26,7 +26,7 @@ namespace Aplicacion.Provincias
             }
             public async Task<Provincias> Handle(Unico request, CancellationToken cancellationToken)
             {
-                var provincias = await context.ParamProvincias.FindAsync(request.Id);
+                var provincias = await context.paramProvincias.FindAsync(request.Id);
                 if (provincias == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });

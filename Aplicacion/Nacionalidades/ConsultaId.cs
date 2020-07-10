@@ -26,7 +26,7 @@ namespace Aplicacion.Nacionalidades
             }
             public async Task<Nacionalidades> Handle(Unico request, CancellationToken cancellationToken)
             {
-                var nacionalidades = await context.ParamNacionalidades.FindAsync(request.Id);
+                var nacionalidades = await context.paramNacionalidades.FindAsync(request.Id);
                 if (nacionalidades == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });

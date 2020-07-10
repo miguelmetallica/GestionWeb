@@ -40,7 +40,7 @@ namespace Aplicacion.Provincias
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var provincias = await context.ParamProvincias.FindAsync(request.Id);
+                var provincias = await context.paramProvincias.FindAsync(request.Id);
                 if (provincias == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });
@@ -50,7 +50,7 @@ namespace Aplicacion.Provincias
                 provincias.Descripcion = request.Descripcion ?? provincias.Descripcion;
                 provincias.Estado = request.Estado;
                 
-                context.ParamProvincias.Update(provincias);
+                context.paramProvincias.Update(provincias);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

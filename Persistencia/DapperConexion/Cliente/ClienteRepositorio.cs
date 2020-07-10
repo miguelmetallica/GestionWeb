@@ -48,6 +48,26 @@ namespace Persistencia.DapperConexion.Cliente
             }
         }
 
+        public async Task<int> NuevoSP(IDictionary<string, object> parametros)
+        {
+            var sp = "ClientesInsertar";
+            try
+            {
+                var connexion = factoryConnection.GetConnection();
+                var resultado = await connexion.ExecuteAsync(sp, parametros, commandType: System.Data.CommandType.StoredProcedure);
+
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar el registro", ex);
+            }
+            finally
+            {
+                factoryConnection.CloseConnection();
+            }
+        }
+
         public Task<ClienteModel> ObtenerId()
         {
             throw new NotImplementedException();

@@ -25,7 +25,7 @@ namespace Aplicacion.Nacionalidades
             }
             public Task<List<Nacionalidades>> Handle(Listado request, CancellationToken cancellationToken)
             {
-                var nacionalidades = context.ParamNacionalidades.ToListAsync();
+                var nacionalidades = context.paramNacionalidades.ToListAsync();
                 return nacionalidades;
             }
         }

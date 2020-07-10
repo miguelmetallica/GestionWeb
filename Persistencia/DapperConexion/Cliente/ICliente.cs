@@ -10,6 +10,7 @@ namespace Persistencia.DapperConexion.Cliente
         Task<IEnumerable<ClienteModel>> ObtenerLista();
         Task<ClienteModel> ObtenerId();
         Task<int> Nuevo(ClienteModel cliente);
+        Task<int> NuevoSP(IDictionary<string, object> parametros);
         Task<int> Actualiza(ClienteModel cliente);
         Task<int> Elimina(int id);
     }

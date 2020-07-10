@@ -11,5 +11,8 @@ namespace Aplicacion.Seguridad
         public string Email { get; set; }
         public string Username { get; set; }
         public string Imagen { get; set; }
+        public string SucursalId { get; set; }  
+        
+        public SucursalesDTO sucursalesDTO { get; set; }
     }
 }

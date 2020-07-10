@@ -8,5 +8,9 @@ namespace Dominio
     public class Usuarios : IdentityUser 
     {
         public string NombreCompleto{ get; set; }
+
+        public string SucursalId { get; set; }
+
+        public Sucursales Sucursal { get; set; }
     }
 }

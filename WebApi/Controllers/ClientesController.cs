@@ -1,5 +1,4 @@
 ﻿using Aplicacion.Clientes;
-using Dominio;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +19,7 @@ namespace WebApi.Controllers
         {
             return await Mediator.Send(new ConsultaSP.ListadoClientes());
         }
-        //public async Task<ActionResult<List<ClientesDto>>> Get()
-        //{
-        //    return await Mediator.Send(new Consulta.ListadoClientes());
-        //}
-
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<ClientesDto>> Detalle(string id)
         {

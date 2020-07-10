@@ -19,18 +19,26 @@ namespace Persistencia
         }
 
         public DbSet<Clientes> clientes { get; set; }
-        public DbSet<Categorias> categorias { get; set; }
-        public DbSet<Colores> colores { get; set; }
-        public DbSet<CondicionesIva> condicionesIvas { get; set; }
-        public DbSet<CuentasCompras> cuentasCompras { get; set; }
-        public DbSet<CuentasVentas> cuentasVentas { get; set; }
-        public DbSet<EstadosCiviles> ParamEstadosCiviles { get; set; }
-        public DbSet<Etiquetas> etiquetas { get; set; }
-        public DbSet<Nacionalidades> ParamNacionalidades { get; set; }
-        public DbSet<Provincias> ParamProvincias { get; set; }
-        public DbSet<TiposDocumentos> ParamTiposDocumentos { get; set; }
-        public DbSet<TiposProductos> ParamTiposProductos { get; set; }
-        public DbSet<UnidadesMedidas> unidadesMedidas { get; set; }
+        public DbSet<Categorias> paramCategorias { get; set; }
+        public DbSet<Colores> paramColores { get; set; }
+        public DbSet<CondicionesIva> paramCondicionesIva { get; set; }
+        public DbSet<CuentasCompras> paramCuentasCompras { get; set; }
+        public DbSet<CuentasVentas> paramCuentasVentas { get; set; }
+        public DbSet<EstadosCiviles> paramEstadosCiviles { get; set; }
+        public DbSet<EstadosInventario> paramEstadosInventario { get; set; }
+        public DbSet<Etiquetas> paramEtiquetas { get; set; }
+        public DbSet<Marcas> paramMarcas { get; set; }
+        public DbSet<Nacionalidades> paramNacionalidades { get; set; }
+        public DbSet<Provincias> paramProvincias { get; set; }
+        public DbSet<TiposDocumentos> paramTiposDocumentos { get; set; }
+        public DbSet<TiposProductos> paramTiposProductos { get; set; }
+        public DbSet<UnidadesMedidas> paramUnidadesMedidas { get; set; }
+        public DbSet<Sucursales> sucursales { get; set; }
+        public DbSet<Productos> productos { get; set; }
+        public DbSet<ProductosCategorias> productosCategorias { get; set; }
+        public DbSet<ProductosEtiquetas> productosEtiquetas { get; set; }
+        public DbSet<ProductosColores> productosColores { get; set; }
+        
 
     }
 }

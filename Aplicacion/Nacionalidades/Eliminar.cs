@@ -27,12 +27,12 @@ namespace Aplicacion.Nacionalidades
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var nacionalidades = await context.ParamNacionalidades.FindAsync(request.Id);
+                var nacionalidades = await context.paramNacionalidades.FindAsync(request.Id);
                 if (nacionalidades == null) {                    
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });
                 }
 
-                context.ParamNacionalidades.Remove(nacionalidades);
+                context.paramNacionalidades.Remove(nacionalidades);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

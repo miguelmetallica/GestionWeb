@@ -29,7 +29,7 @@ namespace Aplicacion.Clientes
             public string ProvinciaId { get; set; }
             public string Localidad { get; set; }
             public string CodigoPostal { get; set; }
-            public string NroCalle { get; set; }
+            public string CalleNro { get; set; }
             public string OtrasReferencias { get; set; }
             public string Telefono { get; set; }
             public string Celular { get; set; }
@@ -75,7 +75,7 @@ namespace Aplicacion.Clientes
                 cliente.ProvinciaId = request.ProvinciaId ?? cliente.ProvinciaId;
                 cliente.Localidad = request.Localidad ?? cliente.Localidad;
                 cliente.CodigoPostal = request.CodigoPostal ?? cliente.CodigoPostal;
-                cliente.NroCalle = request.NroCalle ?? cliente.NroCalle;
+                cliente.CalleNro = request.CalleNro ?? cliente.CalleNro;
                 cliente.OtrasReferencias = request.OtrasReferencias ?? cliente.OtrasReferencias;
                 cliente.Telefono = request.Telefono ?? cliente.Telefono;
                 cliente.Celular = request.Celular ?? cliente.Celular;

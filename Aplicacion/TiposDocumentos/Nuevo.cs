@@ -42,7 +42,7 @@ namespace Aplicacion.TiposDocumentos
                                             Estado = true
                                             };
 
-                context.ParamTiposDocumentos.Add(tiposDocumentos);
+                context.paramTiposDocumentos.Add(tiposDocumentos);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

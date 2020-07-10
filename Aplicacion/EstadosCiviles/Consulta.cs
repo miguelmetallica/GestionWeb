@@ -25,7 +25,7 @@ namespace Aplicacion.EstadosCiviles
             }
             public Task<List<EstadosCiviles>> Handle(Listado request, CancellationToken cancellationToken)
             {
-                var estadosCiviles = context.ParamEstadosCiviles.ToListAsync();
+                var estadosCiviles = context.paramEstadosCiviles.ToListAsync();
                 return estadosCiviles;
             }
         }

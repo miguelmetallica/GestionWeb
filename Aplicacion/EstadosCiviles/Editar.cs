@@ -40,7 +40,7 @@ namespace Aplicacion.EstadosCiviles
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var estadosCiviles = await context.ParamEstadosCiviles.FindAsync(request.Id);
+                var estadosCiviles = await context.paramEstadosCiviles.FindAsync(request.Id);
                 if (estadosCiviles == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });
@@ -50,7 +50,7 @@ namespace Aplicacion.EstadosCiviles
                 estadosCiviles.Descripcion = request.Descripcion ?? estadosCiviles.Descripcion;
                 estadosCiviles.Estado = request.Estado;
                 
-                context.ParamEstadosCiviles.Update(estadosCiviles);
+                context.paramEstadosCiviles.Update(estadosCiviles);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

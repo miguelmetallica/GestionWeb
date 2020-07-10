@@ -25,7 +25,7 @@ namespace Aplicacion.TiposDocumentos
             }
             public Task<List<TiposDocumentos>> Handle(Listado request, CancellationToken cancellationToken)
             {
-                var tiposDocumentos = context.ParamTiposDocumentos.ToListAsync();
+                var tiposDocumentos = context.paramTiposDocumentos.ToListAsync();
                 return tiposDocumentos;
             }
         }

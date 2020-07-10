@@ -24,6 +24,7 @@ namespace Aplicacion.Seguridad
             public string Email { get; set; }
             public string Password { get; set; }
             public string UserName { get; set; }
+            public string SucursalId { get; set; }
         }
 
         public class EjecutaValidacion : AbstractValidator<Ejecuta>
@@ -33,7 +34,8 @@ namespace Aplicacion.Seguridad
                 RuleFor(x => x.NombreCompleto).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty();
                 RuleFor(x => x.Password).NotEmpty();
-                RuleFor(x => x.UserName).NotEmpty();                
+                RuleFor(x => x.UserName).NotEmpty();
+                RuleFor(x => x.SucursalId).NotEmpty();
             }
         }
 
@@ -67,7 +69,8 @@ namespace Aplicacion.Seguridad
                 {
                     NombreCompleto = request.NombreCompleto,
                     UserName = request.UserName,
-                    Email = request.Email
+                    Email = request.Email,
+                    SucursalId = request.SucursalId
                 };
 
                 var result = await userManager.CreateAsync(usuario, request.Password);
@@ -76,10 +79,24 @@ namespace Aplicacion.Seguridad
                     return new UsuarioData
                     {
                         NombreCompleto = usuario.NombreCompleto,
-                        Token = jwtGenerador.CrearToken(usuario,null),
+                        Token = jwtGenerador.CrearToken(usuario, null),
                         Username = usuario.UserName,
                         Email = usuario.Email,
-                        Imagen = null
+                        Imagen = null,
+                        SucursalId = usuario.SucursalId,
+                        sucursalesDTO = context.sucursales
+                                    .Where(c => c.Id == usuario.SucursalId)
+                                    .Select(c => new SucursalesDTO { Id = c.Id,
+                                                                    Codigo = c.Codigo,
+                                                                    Nombre = c.Nombre,
+                                                                    ProvinciaId = c.ProvinciaId,
+                                                                    Localidad = c.Localidad,
+                                                                    CodigoPostal = c.CodigoPostal,
+                                                                    Calle = c.Calle,
+                                                                    NroCalle = c.NroCalle,
+                                                                    PisoDpto = c.PisoDpto,
+                                                                    OtrasReferencias = c.OtrasReferencias,
+                                                                    Estado = c.Estado }).FirstOrDefault()
                     };
                 }
 

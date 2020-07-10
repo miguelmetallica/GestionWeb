@@ -21,7 +21,7 @@ namespace Dominio
         public string Localidad { get; set; }
         public string CodigoPostal { get; set; }
         public string Calle { get; set; }
-        public string NroCalle { get; set; }
+        public string CalleNro { get; set; }
         public string PisoDpto { get; set; }
         public string OtrasReferencias { get; set; }
         public string Telefono { get; set; }

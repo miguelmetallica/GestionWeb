@@ -8,17 +8,20 @@ namespace Aplicacion.Clientes
 {
     using Dominio;
     using FluentValidation;
+    using Persistencia.DapperConexion.Cliente;
+    using System.Collections.Generic;
 
     public class Nuevo
     {
         public class Ejecuta : IRequest 
-        {            
-            public string Codigo { get; set; }
+        {
             public string Apellido { get; set; }
             public string Nombre { get; set; }
             public string RazonSocial { get; set; }
             public string TipoDocumentoId { get; set; }
             public string NroDocumento { get; set; }
+            public string CuilCuit { get; set; }
+            public string Foto { get; set; }
             public DateTime FechaNacimiento { get; set; }
             public string EstadoCivilId { get; set; }
             public string NacionalidadId { get; set; }
@@ -26,14 +29,15 @@ namespace Aplicacion.Clientes
             public string ProvinciaId { get; set; }
             public string Localidad { get; set; }
             public string CodigoPostal { get; set; }
-            public string NroCalle { get; set; }
+            public string Calle { get; set; }
+            public string CalleNro { get; set; }
+            public string PisoDpto { get; set; }
             public string OtrasReferencias { get; set; }
             public string Telefono { get; set; }
             public string Celular { get; set; }
             public string Email { get; set; }
             public bool Estado { get; set; }
-            public string UsuarioAlta { get; set; }
-            public DateTime FechaAlta { get; set; }
+            public string UsuarioAlta { get; set; }             
         }
 
         public class EjecutaValidacion : AbstractValidator<Ejecuta> {
@@ -45,45 +49,45 @@ namespace Aplicacion.Clientes
         
         public class Manejador : IRequestHandler<Ejecuta>
         {
-            private readonly GestionContext context;
+            private readonly ICliente cliente;
 
-            public Manejador(GestionContext context)
+            public Manejador(ICliente cliente)
             {
-                this.context = context;
+                this.cliente = cliente;
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var cliente = new Clientes {
-                                            Id = Guid.NewGuid().ToString(),
-                                            Codigo = request.Codigo,
-                                            Apellido = request.Apellido,
-                                            Nombre = request.Nombre,
-                                            RazonSocial = request.RazonSocial,
-                                            TipoDocumentoId = request.TipoDocumentoId,
-                                            NroDocumento = request.NroDocumento,
-                                            FechaNacimiento = request.FechaNacimiento,
-                                            EstadoCivilId = request.EstadoCivilId,
-                                            NacionalidadId = request.NacionalidadId,
-                                            EsPersonaJuridica = request.EsPersonaJuridica,
-                                            ProvinciaId = request.ProvinciaId,
-                                            Localidad = request.Localidad,
-                                            CodigoPostal = request.CodigoPostal,
-                                            NroCalle = request.NroCalle,
-                                            OtrasReferencias = request.OtrasReferencias,
-                                            Telefono = request.Telefono,
-                                            Celular = request.Celular,
-                                            Email = request.Email,
-                                            Estado = request.Estado,
-                                            UsuarioAlta = request.UsuarioAlta,
-                                            FechaAlta = request.FechaAlta
-                                            };
+                var parametros = new  Dictionary<string, object>();
+                        parametros.Add("@Id", Guid.NewGuid().ToString());
+                        parametros.Add("@Apellido", request.Apellido);
+                        parametros.Add("@Nombre", request.Nombre);
+                        parametros.Add("@TipoDocumentoId", request.TipoDocumentoId);
+                        parametros.Add("@NroDocumento", request.NroDocumento);
+                        parametros.Add("@CuilCuit", request.CuilCuit);
+                        parametros.Add("@FechaNacimiento", request.FechaNacimiento);
+                        parametros.Add("@EstadoCivilId", request.EstadoCivilId);
+                        parametros.Add("@NacionalidadId", request.NacionalidadId);
+                        parametros.Add("@ProvinciaId", request.ProvinciaId);
+                        parametros.Add("@Localidad", request.Localidad);
+                        parametros.Add("@CodigoPostal", request.CodigoPostal);
+                        parametros.Add("@Calle", request.Calle);
+                        parametros.Add("@CalleNro", request.CalleNro);
+                        parametros.Add("@PisoDpto", request.PisoDpto);
+                        parametros.Add("@OtrasReferencias", request.OtrasReferencias);
+                        parametros.Add("@Telefono", request.Telefono);
+                        parametros.Add("@Celular", request.Celular);
+                        parametros.Add("@Email", request.Email);
+                        parametros.Add("@Estado", request.Estado);
+                        parametros.Add("@Usuario", request.UsuarioAlta);
 
-                context.clientes.Add(cliente);
-                var result = await context.SaveChangesAsync();
+                var result = await cliente.NuevoSP(parametros);
+
                 if (result > 0) {
                     return Unit.Value;
                 }
                 throw new Exception("No se pudo insertar el registro");
+
+
             }
         }
 

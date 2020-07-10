@@ -40,7 +40,7 @@ namespace Aplicacion.Nacionalidades
             }
             public async Task<Unit> Handle(Ejecuta request, CancellationToken cancellationToken)
             {
-                var nacionalidades = await context.ParamNacionalidades.FindAsync(request.Id);
+                var nacionalidades = await context.paramNacionalidades.FindAsync(request.Id);
                 if (nacionalidades == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });
@@ -50,7 +50,7 @@ namespace Aplicacion.Nacionalidades
                 nacionalidades.Descripcion = request.Descripcion ?? nacionalidades.Descripcion;
                 nacionalidades.Estado = request.Estado;
                 
-                context.ParamNacionalidades.Update(nacionalidades);
+                context.paramNacionalidades.Update(nacionalidades);
                 var result = await context.SaveChangesAsync();
                 if (result > 0) {
                     return Unit.Value;

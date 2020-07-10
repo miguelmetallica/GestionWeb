@@ -26,7 +26,7 @@ namespace Aplicacion.EstadosCiviles
             }
             public async Task<EstadosCiviles> Handle(Unico request, CancellationToken cancellationToken)
             {
-                var estadosCiviles = await context.ParamEstadosCiviles.FindAsync(request.Id);
+                var estadosCiviles = await context.paramEstadosCiviles.FindAsync(request.Id);
                 if (estadosCiviles == null)
                 {
                     throw new ManejadorException(HttpStatusCode.NotFound, new { mensaje = "El registro no existe" });
