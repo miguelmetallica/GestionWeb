@@ -30,11 +30,19 @@ BEGIN TRY
 
 	SELECT @SucursalId = SucursalId
 	FROM AspNetUsers 
-	WHERE Id = @Usuario
+	WHERE UserName = @Usuario
 
 	SELECT @CodigoSucursal = Codigo
 	FROM Sucursales
 	WHERE Id = @SucursalId
+
+	IF EXISTS(SELECT 1 FROM Clientes WHERE TipoDocumentoId = @TipoDocumentoId AND NroDocumento = @NroDocumento)
+	BEGIN
+		RAISERROR ('Tipo y Numero de Documento Duplicado', -- Message text.  
+				11, -- Severity.  
+				1 -- State.  
+			); 
+	END
 
 	BEGIN TRAN
 		EXEC @Secuencia = NextNumero 'Clientes',@SucursalId
@@ -52,9 +60,7 @@ BEGIN TRY
 					@ProvinciaId,UPPER(@Localidad),UPPER(@CodigoPostal),UPPER(@Calle),UPPER(@CalleNro),
 					UPPER(@PisoDpto),UPPER(@OtrasReferencias),UPPER(@Telefono),UPPER(@Celular),UPPER(@Email),@Estado,
 					DATEADD(HH,4,GETDATE()),UPPER(@Usuario))
-	COMMIT;
-
-	SELECT 1 Id
+	COMMIT;	
 
 END TRY
 BEGIN CATCH

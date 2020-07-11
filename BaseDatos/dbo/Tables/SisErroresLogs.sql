@@ -8,3 +8,10 @@
     CONSTRAINT [PK_SisErroresLogs] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_SisErroresLogs]
+    ON [dbo].[SisErroresLogs]([FechaHora] DESC);
+
