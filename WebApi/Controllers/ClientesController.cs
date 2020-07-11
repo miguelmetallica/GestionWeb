@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Persistencia.DapperConexion.Cliente;
 using Persistencia.Paginacion;
 using System.Collections.Generic;
+using System.Net;
+
 using System.Threading.Tasks;
 
 namespace WebApi.Controllers
@@ -27,9 +29,19 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Unit>> Post(Nuevo.Ejecuta data)
+        public async Task<ActionResult> Post(Nuevo.Ejecuta data)
         {
-            return await Mediator.Send(data);            
+            try
+            {
+                await Mediator.Send(data);
+                return Ok();
+            }
+            catch (System.Exception e)
+            {
+                return Problem(e.Message);                
+            }
+
+
         }
 
         [HttpPut("{id}")]

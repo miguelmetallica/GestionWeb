@@ -23,8 +23,8 @@ namespace WebApi.Controllers
             return await Mediator.Send(ejecuta);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<UsuarioData>> DevolverUsuario() 
+        [HttpGet("UsuarioActual")]
+        public async Task<ActionResult<UsuarioData>> UsuarioActual() 
         {
             return await Mediator.Send(new UsuarioActual.Ejecutar());
         }

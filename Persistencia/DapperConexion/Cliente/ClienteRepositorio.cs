@@ -54,13 +54,13 @@ namespace Persistencia.DapperConexion.Cliente
             try
             {
                 var connexion = factoryConnection.GetConnection();
-                var resultado = await connexion.ExecuteAsync(sp, parametros, commandType: System.Data.CommandType.StoredProcedure);
+                await connexion.ExecuteAsync(sp, parametros, commandType: System.Data.CommandType.StoredProcedure);
 
-                return resultado;
+                return 1;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al insertar el registro", ex);
+                throw new Exception("Error al insertar el registro: " + ex.Message);
             }
             finally
             {
