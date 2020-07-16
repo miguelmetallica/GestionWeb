@@ -1,0 +1,55 @@
+﻿@model Gestion.Models.ParamCategorias
+@{
+    ViewData["Title"] = "Nueva Categoria";
+
+    List<SelectListItem> categorias = ViewBag.Categorias;
+}
+
+<h1>Nueva Categoria</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Nuevo" method="post" id="frm">
+            <div class="form-group">
+                <label asp-for="Codigo"></label>
+                <input asp-for="Codigo" class="form form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion"></label>
+                <input asp-for="Descripcion" class="form form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ParentId"></label>
+                <select asp-for="ParentId" class="form form-control"
+                        asp-items="@categorias">                    
+                </select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="button" value="Guardar" class="btn btn-primary" onclick="abrirModal()" />
+                <a asp-action="Index" class="btn btn-danger">Volver</a>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>
+
+<script src="~/js/sweetalert.js"></script>
+<script src="~/js/generico.js"></script>
+<script>
+    function abrirModal() {
+        mostrarModalNuevo().then((result) => {
+            if (result.value) {
+                var form = document.getElementById("frm");
+                form.submit();
+            }
+        })
+    }
+</script>

@@ -18,7 +18,7 @@ BEGIN
 		Localidad,
 		CodigoPostal,
 		Calle,
-		NroCalle,
+		CalleNro,
 		OtrasReferencias,
 		Telefono,
 		Celular,
