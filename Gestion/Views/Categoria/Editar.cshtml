@@ -1,16 +1,17 @@
 ﻿@model Gestion.Models.ParamCategorias
 @{
-    ViewData["Title"] = "Nueva Categoria";
+    ViewData["Title"] = "Editar Categoria";
 
     List<SelectListItem> categorias = ViewBag.Categorias;
 }
 
-<h1>Nueva Categoria</h1>
+<h1>Editar Categoria</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-8">
         <form asp-action="Guardar" method="post" id="frm">
+            <input type="hidden" asp-for="Id" class="form form-control" />
             <div class="form-group">
                 <label asp-for="Codigo"></label>
                 <input asp-for="Codigo" class="form form-control" />
@@ -24,7 +25,7 @@
             <div class="form-group">
                 <label asp-for="ParentId"></label>
                 <select asp-for="ParentId" class="form form-control"
-                        asp-items="@categorias">                    
+                        asp-items="@categorias">
                 </select>
                 <span asp-validation-for="ParentId" class="text-danger"></span>
             </div>

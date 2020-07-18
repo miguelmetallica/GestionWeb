@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Gestion.Models
 {
@@ -11,7 +12,10 @@ namespace Gestion.Models
         }
 
         public string Id { get; set; }
+
+        [Required]
         public string Codigo { get; set; }
+        [Required]
         public string Descripcion { get; set; }
         public string ParentId { get; set; }
         public bool? Estado { get; set; }

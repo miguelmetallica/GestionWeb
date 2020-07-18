@@ -4,17 +4,23 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Categorias</h1>
 
 <p>
-    <a asp-action="Nuevo">Create New</a>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MdlNuevo" onclick="AbrirNuevo()">
+        Nueva
+    </button>
 </p>
-<table class="table">
+
+<form class="mb-2" style="display:grid;grid-template-columns: 1fr 2fr 1fr 1fr" id="frmbuscar">
+    <label>Buscar</label>
+    <input type="text" id="txtBuscar" name="txtBuscar" class="form form-control" />
+    <input type="button" value="Buscar" class="btn btn-info" onclick="Buscar()" />
+    <input type="button" value="Limpiar" class="btn btn-danger" onclick="Limpiar()" />
+</form>
+<table class="table" id="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Codigo)
             </th>
@@ -24,36 +30,164 @@
             <th>
                 @Html.DisplayNameFor(model => model.ParentId)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th></th>
+            <th>Operaciones</th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+    <tbody id="tDatos">
     </tbody>
 </table>
+
+<form asp-action="Eliminar" asp-controller="Categoria" method="post" id="frmEliminar">
+    <input type="hidden" id="IdEliminar" name="id" />
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="MdlNuevo" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>@Html.DisplayNameFor(model => model.Codigo)</label>
+                    <input id="txtCodigo" class="form form-control" />                    
+                </div>
+                <div class="form-group">
+                    <label>@Html.DisplayNameFor(model => model.Descripcion)</label>
+                    <input id="txtDescripcion" class="form form-control" />                    
+                </div>
+                <div class="form-group">
+                    <label>@Html.DisplayNameFor(model => model.ParentId)</label>
+                    <input id="txtParentId" class="form form-control" />                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="btnCerrarNuevo">Cancelar</button>
+            </div>
+            <div id="divErrorNuevo">                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/sweetalert.js"></script>
+<script src="~/js/generico.js"></script>
+<script>
+    window.onload = function () {
+        Buscar()
+
+        $(document).ready(function () {
+            $('#table').DataTable();
+        });
+    }
+
+    function Buscar() {
+        var strBuscar = document.getElementById("txtBuscar").value;
+        var contenido = "";
+        var tbody = document.getElementById("tDatos");
+        tbody.innerHTML = contenido;
+        $.ajax({
+            async: false,
+            type: 'Post',
+            url: '@Url.Action("Categorias")',
+            dataType: 'json',
+            data: { buscar: strBuscar },
+            success: function (data) {
+                $.each(data, function (i, data) {
+                    contenido += "<tr>";
+                    contenido += "<td>" + data.codigo + "</td>";
+                    contenido += "<td>" + data.descripcion + "</td>";
+                    contenido += "<td>" + data.parentId + "</td>";
+                    contenido += '<td>';
+                    contenido += '<i class="fa fa-trash btn btn-danger" aria-hidden="true" onclick="Eliminar(' + String.fromCharCode(39) + data.id + String.fromCharCode(39) + ')"></i> ';
+                    //contenido += '<a class="fa fa-edit btn btn-primary" href="@Url.Action("Editar")/' + data.id + '"></a>';
+                    contenido += '<a type="button" class="fa fa-edit btn btn-primary" data-toggle="modal" data-target="#MdlNuevo"></a>';
+                    contenido += '</td>';
+                    contenido += "</tr>";
+
+                    tbody.innerHTML = contenido;
+                });
+            },
+            error: function (ex) {
+                alert('Error' + ex);
+            }
+        });
+    };
+
+    function Limpiar() {
+        document.getElementById("txtBuscar").value = "";
+        Buscar()
+    };
+
+    function Eliminar(_id) {
+        mostrarModalEliminar().then((result) => {
+            if (result.value) {
+                $.ajax({
+                    async: false,
+                    type: 'Post',
+                    url: '@Url.Action("Eliminar")',
+                    dataType: 'json',
+                    data: { id: _id },
+                    success: function (data) {
+                        if (data == 1) {
+                            mostrarModalOk();
+                        }
+                        else {
+                            mostrarModalError();
+                        }
+                        Buscar();
+                    }
+                    ,
+                    error: function (ex) {
+                        alert('Error' + ex);
+                    }
+                });
+            }
+        })
+    };
+
+    function AbrirNuevo() {
+        document.getElementById("divErrorNuevo").innerHTML = "";
+    };
+
+    function Guardar() {
+        var txtCodigo = document.getElementById("txtCodigo").value;
+        var txtDescripcion = document.getElementById("txtDescripcion").value;
+        var txtParentId = document.getElementById("txtParentId").value;
+
+        $.ajax({
+            async: false,
+            type: 'Post',
+            url: '@Url.Action("GuardarCambios")',
+            dataType: 'json',
+            data: {
+                Id: null,
+                Codigo: txtCodigo,
+                Descripcion: txtDescripcion,
+                ParentId: txtParentId,
+                Estado: true
+            },
+            success: function (data) {
+                if (data.codigo == 1) {
+                    document.getElementById("btnCerrarNuevo").click();
+                    mostrarModalOk();
+                }
+                else {
+                    mostrarModalError();
+                    document.getElementById("divErrorNuevo").innerHTML = data.error;
+                }
+            },
+            error: function (ex) {
+                mostrarModalError();                
+            }
+        });
+
+        Buscar();
+    };
+</script>
+
